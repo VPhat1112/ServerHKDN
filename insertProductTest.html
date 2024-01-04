@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="post" action="InsertProduct.php">
+        <table>
+            <tr>
+                <td>Name Product</td>
+                <td><input type="text" name="product_name"></td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>
+                    <select name="category_id" id="category">
+                        <option value="1">Điện tử</option>
+                        <option value="2">Thời trang</option>
+                        <option value="3">Nội trợ</option>
+                        <option value="4">Kiến thức(sách)</option>
+                    </select>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>Images</td>
+                <td><input type="text" name="product_image"></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input text="text" name="product_price"></td>
+            </tr>
+            <tr>
+                <td>Decs</td>
+                <td><input text="text" name="product_decs"></td>
+            </tr>
+            <tr>
+                <td>Number_Seller</td>
+                <td><input text="text" name="product_numbersell"></td>
+            </tr>
+            <tr>
+                <td>Shop_id</td>
+                <td><input text="text" name="id_shop"></td>
+            </tr>
+            <td><Button type="submit" value="Register">Register</Button></td>
+        </table>
+    </form>
+</body>
+
+</html>
