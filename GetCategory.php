@@ -8,8 +8,6 @@
 			$row['id'],
 			$row['category_name'],
 			$row['category_image'],
-			$row['CreatedAt'],
-			$row['UpdateAt'],
 		));
 	}
 	echo json_encode($loaisanpham);
@@ -17,14 +15,10 @@
         public $id;
 	    public $category_name;
 	    public $category_image;
-		public $CreatedAt;
-		public $UpdateAt;
-		function __construct($id,$category_name,$category_image,$CreatedAt,$UpdateAt){
+		function __construct($id,$category_name,$category_image){
 			$this->id =  $id;
 			$this->category_name =  $category_name;
 			$this->category_image =  $category_image;
-			$this->CreatedAt=$CreatedAt;
-			$this->UpdateAt=$UpdateAt;
 		}
 	}
 ?>
