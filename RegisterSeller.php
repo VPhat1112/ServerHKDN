@@ -5,7 +5,7 @@
     require 'PHPMailer\PHPMailerAutoload.php';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $shop_name=$_POST['shop_name'];
-        $shop_kind=$_POST['shop_kind'];
+        $shop_phone=$_POST['Phone'];
         $ImageShop=$_POST['ImageShop'];
         $idUser=$_POST['idUser'];
         $Address=$_POST['Address'];
@@ -22,9 +22,9 @@
             echo"You already register seller! \n Please wait for admin accept";
         } else {
             if(!empty($ImageShop)){
-                $images=date("d-m-y").'-'.time().'-'.rand(10000,100000).'.jpg';
+                $images=date("d-m-y").'-'.time().'-'.rand(10000,100000).'shop.jpg';
                 if(file_put_contents($images, base64_decode($ImageShop))){
-                    $query = "INSERT INTO registor_sellers(shop_name,kind_shop,Image_shop,id_user,Address) VALUES('$shop_name','$shop_kind','$images',$idUser,'$Address')";
+                    $query = "INSERT INTO registor_sellers(shop_name,Phone,Image_shop,id_user,Address) VALUES('$shop_name','$shop_phone','$images',$idUser,'$Address')";
                     if(mysqli_query($conn, $query)){
                         $mail = new PHPMailer(true);
                         try {

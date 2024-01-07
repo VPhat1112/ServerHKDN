@@ -11,8 +11,6 @@
         $Buyer_id=$_POST['buyer_id'];
 
         //Insert of order detail
-        // cần có order_id
-        // cần có contact_id
         $product_id=$_POST['Product_id'];
         $Number_pay=$_POST['Number_pay'];
         $product_price=$_POST['product_price'];
@@ -24,8 +22,15 @@
         $response['successContact']=false;
         $response['successOrderDetail']=false;
 
+        do{
+            $order_id = rand(100000, 999999);
+            $stmtIDorder = $conn->prepare("SELECT Count(*) FROM tbl_order where id ='$order_id'");
+            $stmtIDorder->execute();
+            $stmtIDorder->bind_result($count);
+        }while($count>0);
+
         //Insert of order mysql
-        $stmtorder = $conn->prepare("INSERT INTO tbl_order(FinalTotal) VALUES ('$BillTotal')");
+        $stmtorder = $conn->prepare("INSERT INTO tbl_order(id,FinalTotal) VALUES ('$order_id','$BillTotal')");
         $checkrunOrder=$stmtorder->execute();
         if  ($checkrunOrder){
             $response['successOrder']=true;
@@ -58,28 +63,6 @@
             $stmtorderDetalDrop->execute();
             echo json_encode($response);
         }
-        
-        // if (!$checkrunOrder) {
-        //     echo json_encode($response);
-        // } else if($checkrunOrder){
-        //     $response['successOrder']=true;
-        //     $inserted_id_order = $stmtorder->insert_id;
-        // } else if(!$checkrunContact){
-        //     $stmtContactDrop = $conn->prepare("DELETE FROM tbl_order WHERE id='$inserted_id_order'");
-        //     $stmtContactDrop->execute();
-        //     echo json_encode($response);
-        // } else if($checkrunContact){
-        //     $response['successContact']=true;
-        //     $inserted_id_contact = $stmtContact->insert_id;
-        // } else if(!$checkrunOrderDetail){
-        //     $stmtContactDrop = $conn->prepare("DELETE FROM tbl_order WHERE id='$inserted_id_order'");
-        //     $stmtContactDrop->execute();
-        //     $stmtorderDetalDrop = $conn->prepare("DELETE FROM contact_buy WHERE id='$inserted_id_contact'");
-        //     $stmtorderDetalDrop->execute();
-        //     echo json_encode($response);
-        // } else if($checkrunOrderDetail){
-        //     $response['successOrderDetail']=true;
-        // }
 
         echo json_encode($response);
     }
