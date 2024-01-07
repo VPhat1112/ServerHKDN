@@ -4,7 +4,8 @@
 
         //Insert of order
         $BillTotal=$_POST['BillTotal'];
-
+        $Address_ship=$_POST['Address_ship'];
+        $Phone=$_POST['Phone'];
         //Insert of contact_buy
 
         $Shop_id=$_POST['Shop_id'];
@@ -30,7 +31,7 @@
         }while($count>0);
 
         //Insert of order mysql
-        $stmtorder = $conn->prepare("INSERT INTO tbl_order(id,FinalTotal) VALUES ('$order_id','$BillTotal')");
+        $stmtorder = $conn->prepare("INSERT INTO tbl_order(id,FinalTotal,Address_ship,Phone) VALUES ('$order_id','$BillTotal','$Address_ship','$Phone')");
         $checkrunOrder=$stmtorder->execute();
         if  ($checkrunOrder){
             $response['successOrder']=true;
