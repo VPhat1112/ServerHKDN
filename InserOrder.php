@@ -23,19 +23,21 @@
         $response['successContact']=false;
         $response['successOrderDetail']=false;
 
-        do{
+        do {
             $order_id = rand(100000, 999999);
-            $stmtIDorder = $conn->prepare("SELECT Count(*) FROM tbl_order where id ='$order_id'");
+            $stmtIDorder = $conn->prepare("SELECT Count(*) FROM tbl_order where id = ?");
+            $stmtIDorder->bind_param("s", $order_id);
             $stmtIDorder->execute();
             $stmtIDorder->bind_result($count);
-        }while($count>0);
+            $stmtIDorder->fetch();
+            $stmtIDorder->close();
+        } while ($count > 0);
 
         //Insert of order mysql
-        $stmtorder = $conn->prepare("INSERT INTO tbl_order(id,FinalTotal,Address_ship,Phone) VALUES ('$order_id','$BillTotal','$Address_ship','$Phone')");
-        $checkrunOrder=$stmtorder->execute();
-        if  ($checkrunOrder){
+        $stmtorder = $conn->prepare("INSERT INTO tbl_order(id, FinalTotal, Address_ship, Phone) VALUES (?, ?, ?, ?)");
+        $stmtorder->bind_param("ssss", $order_id, $BillTotal, $Address_ship, $Phone);
+        if  ($stmtorder->execute()){
             $response['successOrder']=true;
-            $inserted_id_order = $stmtorder->insert_id;
         }else{
             echo json_encode($response);
         }
@@ -52,7 +54,7 @@
             echo json_encode($response);
         }
         //Insert of detail mysql
-        $stmtorderDetal = $conn->prepare("INSERT INTO order_detail(id,contact_id,product_id,Number_pay,product_price,Product_TotalPay) VALUES ('$inserted_id_order','$inserted_id_contact',?,?,?,?)");
+        $stmtorderDetal = $conn->prepare("INSERT INTO order_detail(id,contact_id,product_id,Number_pay,product_price,Product_TotalPay) VALUES ('$order_id','$inserted_id_contact',?,?,?,?)");
         $stmtorderDetal->bind_param("ssss",$product_id,$Number_pay,$product_price,$Product_TotalPay);
         $checkrunOrderDetail=$stmtorderDetal->execute();
         if  ($checkrunOrderDetail){

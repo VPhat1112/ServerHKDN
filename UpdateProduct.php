@@ -24,29 +24,20 @@
 
                 if ($stmt->execute()) {
                     echo 'success';
-                    // $response["success"] = true;
                 } else {
                     echo 'success';
-                    // $response["success"] = false;
                 }
             } else {
                 echo 'failed';
-                // $response["success"] = false;
             }
-            // echo json_encode($response);
         } else {
-            // No new image provided, update other fields
             $stmt = $conn->prepare("UPDATE product SET product_name=?, product_price=?, product_decs=?, product_numbersell=?, category_id=? WHERE id='$id'");
             $stmt->bind_param("sssss", $product_name, $product_price, $product_decs, $product_numbersell, $category_id);
 
             if ($stmt->execute()) {
                 echo 'success';
-                // $response["success"] = true;
-                // echo json_encode($response);
             } else {
                 echo 'failed';
-                // $response["success"] = false;
-                // echo json_encode($response);
             }
         }
         $conn->close();

@@ -1,14 +1,13 @@
 <?php
 	include "connect.php";
-    $id_shop=$_GET['id_shop'];
-    $status=$_GET['status'];
+    $id_user=$_GET['id_user'];
 	$query = "SELECT users.id as user_id,shops.id as shop_id,shop_name, tbl_order.id as order_id,contact_buy.id as contact_id,users.Name,tbl_order.Phone,tbl_order.Address_ship,product.id as product_id,FinalTotal,Order_status,Number_pay,product_name,product_image,tbl_order.CreatedAt
     FROM tbl_order , order_detail , contact_buy , product ,users,shops
     where tbl_order.id=order_detail.id 
     and order_detail.contact_id=contact_buy.id 
     and order_detail.product_id=product.id
     and contact_buy.buyer_id=users.id
-    and contact_buy.shop_id=shops.id and tbl_order.Order_status='$status' and shops.id='$id_shop';";
+    and contact_buy.shop_id=shops.id and users.id='$id_user';";
 	$data = mysqli_query($conn,$query);
 	$Order = array();
 	while ($row = mysqli_fetch_assoc($data)) {
